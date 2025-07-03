@@ -129,7 +129,9 @@ def run_active_learning(total_df,theory_method,save_file,objective='MaxVar'):
                 if theory_method == 'informed':
                     y_test_calc = X_test['Calculated_deltaG'].copy()
                 next_sample = np.argsort(np.absolute(predictions-y_test_calc.values))[-5:]
-                print(i,rmse_scores[-1],np.mean(np.absolute(predictions-y_test_calc.values)),np.max(np.absolute(predictions-y_test_calc.values)),np.absolute(predictions-y_test_calc.values)[next_sample],next_sample)
+                if j==1 and i==0:
+                    print("Iteration","RMSE","Mean Difference","Max Difference","Mean Variance","Max Variance","Sampled Difference 1", "Sampled Difference 2", "Sampled Difference 3", "Sampled Difference 4", "Sampled Difference 5", "Next Sample Indices")
+                print(i,rmse_scores[-1],np.mean(np.absolute(predictions-y_test_calc.values)),np.max(np.absolute(predictions-y_test_calc.values)),np.mean(variances),np.max(variances),np.absolute(predictions-y_test_calc.values)[next_sample],next_sample)
             if objective=='Random':
                 next_sample = X_test.sample(n=5,random_state=42*j).index.values.tolist()
                 print(i,rmse_scores[-1],np.mean(variances),np.max(variances),variances[next_sample],next_sample)
